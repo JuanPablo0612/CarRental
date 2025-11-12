@@ -46,6 +46,8 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.navigation.compose)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.okhttp)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
