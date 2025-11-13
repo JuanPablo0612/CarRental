@@ -15,12 +15,13 @@ import androidx.compose.ui.Modifier
 import com.juanpablo0612.carrental.ui.theme.AppTheme
 import com.juanpablo0612.carrental.ui.vehicles.list.components.VehicleList
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun VehicleListScreen(
     onNavigateToAddVehicle: () -> Unit,
     onNavigateToVehicleDetail: (vehicleId: String) -> Unit,
-    viewModel: VehicleListViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    viewModel: VehicleListViewModel = koinViewModel(),
 ) {
     val uiState = viewModel.uiState
 
@@ -58,6 +59,7 @@ private fun VehicleListScreenContent(
                     VehicleList(
                         vehicles = uiState.vehicles,
                         onVehicleClick = { vehicle -> onVehicleClick(vehicle.id) },
+                        modifier = Modifier.fillMaxSize(),
                     )
                 }
             }

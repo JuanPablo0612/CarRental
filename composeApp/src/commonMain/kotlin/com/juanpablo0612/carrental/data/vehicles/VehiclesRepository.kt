@@ -16,7 +16,7 @@ class FakeVehiclesRepository : VehiclesRepository {
             year = 2020,
             type = "Sedan",
             pricePerDay = 45.0,
-            imageUrl = "https://example.com/images/toyota_camry.jpg",
+            imageUrl = "https://media.ed.edmunds-media.com/toyota/camry/2020/oem/2020_toyota_camry_sedan_se_fq_oem_2_1600.jpg",
             isAvailable = true
         ),
         Vehicle(
@@ -26,7 +26,7 @@ class FakeVehiclesRepository : VehiclesRepository {
             year = 2019,
             type = "SUV",
             pricePerDay = 60.0,
-            imageUrl = "https://example.com/images/ford_explorer.jpg",
+            imageUrl = "https://images.hgmsites.net/lrg/2019-ford-explorer-xlt-4wd-angular-front-exterior-view_100675940_l.jpg",
             isAvailable = false
         ),
         Vehicle(
@@ -36,7 +36,7 @@ class FakeVehiclesRepository : VehiclesRepository {
             year = 2021,
             type = "Sedan",
             pricePerDay = 50.0,
-            imageUrl = "https://example.com/images/honda_civic.jpg",
+            imageUrl = "https://autotest.com.ar/wp-content/uploads/2020/10/honda-civic-2021.jpg",
             isAvailable = true
         )
     )

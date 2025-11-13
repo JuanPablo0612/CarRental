@@ -11,7 +11,7 @@ import org.koin.compose.KoinApplication
 fun App() {
     KoinApplication(
         application = {
-
+            modules(appModule)
         }
     ) {
         AppTheme {
