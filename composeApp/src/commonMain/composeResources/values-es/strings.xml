@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Renta de vehículos</string>
+    <string name="available">Disponible</string>
+    <string name="not_available">No disponible</string>
+    <string name="price_per_day">Precio por día</string>
+    <string name="rent_now">Rentar ahora</string>
+    <string name="vehicle_details">Detalles del vehículo</string>
+    <string name="back">Atrás</string>
+    <string name="vehicle_information">Información del vehículo</string>
+    <string name="type">Tipo</string>
+    <string name="year">Año</string>
+    <string name="vehicle_image">Imagen del vehículo</string>
 </resources>

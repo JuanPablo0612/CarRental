@@ -12,7 +12,7 @@ data class VehicleDetailDestination(
 
 fun NavGraphBuilder.vehicleDetailDestination(onNavigateBack: () -> Unit) {
     composable<VehicleDetailDestination> {
-
+        VehicleDetailScreen(onNavigateBack = onNavigateBack)
     }
 }
 

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.juanpablo0612.carrental.ui.vehicles.detail.navigateToVehicleDetail
+import com.juanpablo0612.carrental.ui.vehicles.detail.vehicleDetailDestination
 import com.juanpablo0612.carrental.ui.vehicles.list.VehicleListDestination
 import com.juanpablo0612.carrental.ui.vehicles.list.vehicleListDestination
 
@@ -17,6 +18,11 @@ fun AppNavigation() {
                 navController.navigateToVehicleDetail(vehicleId)
             },
             onNavigateToAddVehicle = {}
+        )
+        vehicleDetailDestination(
+            onNavigateBack = {
+                navController.navigateUp()
+            }
         )
     }
 }

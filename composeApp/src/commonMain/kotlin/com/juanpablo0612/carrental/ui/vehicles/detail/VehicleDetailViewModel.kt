@@ -3,15 +3,26 @@ package com.juanpablo0612.carrental.ui.vehicles.detail
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.juanpablo0612.carrental.data.vehicles.VehiclesRepository
 import com.juanpablo0612.carrental.domain.model.Vehicle
 import kotlinx.coroutines.launch
 
-class VehicleDetailViewModel(private val vehiclesRepository: VehiclesRepository) : ViewModel() {
+class VehicleDetailViewModel(
+    private val vehiclesRepository: VehiclesRepository,
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
     var uiState by mutableStateOf(VehicleDetailUiState())
         private set
+
+    private val vehicleDetail = savedStateHandle.toRoute(VehicleDetailDestination::class)
+
+    init {
+        loadVehicle(vehicleDetail.id)
+    }
 
     private fun loadVehicle(id: String) {
         viewModelScope.launch {
