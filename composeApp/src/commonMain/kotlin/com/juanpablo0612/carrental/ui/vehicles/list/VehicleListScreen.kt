@@ -78,7 +78,7 @@ private fun VehicleListScreenContent(
                     )
                 },
                 scrollBehavior = scrollBehavior,
-                colors = TopAppBarDefaults.largeTopAppBarColors(
+                colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                     scrolledContainerColor = MaterialTheme.colorScheme.surface
                 )
@@ -98,20 +98,17 @@ private fun VehicleListScreenContent(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            // Barra de búsqueda y filtros
             if (!uiState.isLoading && uiState.error == null) {
                 VehicleSearchBar(
                     searchQuery = uiState.searchQuery,
                     onSearchQueryChange = onSearchQueryChange
                 )
 
-                // Chips de filtro
                 VehicleFilterChips(
                     selectedFilter = uiState.selectedFilter,
                     onFilterSelected = onFilterChange
                 )
 
-                // Estadísticas de vehículos
                 if (uiState.vehicles.isNotEmpty()) {
                     VehicleStats(
                         totalVehicles = uiState.vehicles.size,
@@ -120,7 +117,6 @@ private fun VehicleListScreenContent(
                 }
             }
 
-            // Contenido principal
             Box(modifier = Modifier.fillMaxSize()) {
                 when {
                     uiState.isLoading -> {
