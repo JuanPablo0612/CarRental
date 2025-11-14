@@ -10,4 +10,19 @@
     <string name="type">Type</string>
     <string name="year">Year</string>
     <string name="vehicle_image">Vehicle image</string>
+    <string name="vehicles">Vehicles</string>
+    <string name="add_vehicle">Add Vehicle</string>
+    <string name="no_vehicles_title">No vehicles available</string>
+    <string name="no_vehicles_description">Start by adding your first vehicle to the system</string>
+    <string name="error_loading_vehicles">Error loading vehicles</string>
+    <string name="retry">Retry</string>
+    <string name="search_vehicles">Search vehicles</string>
+    <string name="filter">Filter</string>
+    <string name="per_day">/day</string>
+    <string name="filter_all">All</string>
+    <string name="filter_available">Available</string>
+    <string name="filter_rented">Rented</string>
+    <string name="stats_total">Total</string>
+    <string name="stats_available">Available</string>
+    <string name="stats_rented">Rented</string>
 </resources>

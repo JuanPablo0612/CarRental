@@ -23,9 +23,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import carrental.composeapp.generated.resources.Res
+import carrental.composeapp.generated.resources.available
+import carrental.composeapp.generated.resources.not_available
+import carrental.composeapp.generated.resources.per_day
 import coil3.compose.AsyncImage
 import com.juanpablo0612.carrental.domain.model.Vehicle
 import com.juanpablo0612.carrental.ui.theme.AppTheme
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -105,7 +110,7 @@ fun VehicleListItem(vehicle: Vehicle, onClick: () -> Unit, modifier: Modifier = 
                             color = MaterialTheme.colorScheme.primary
                         )
                         Text(
-                            text = "/día",
+                            text = stringResource(Res.string.per_day),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(start = 4.dp, bottom = 2.dp)
@@ -138,7 +143,9 @@ fun VehicleListItem(vehicle: Vehicle, onClick: () -> Unit, modifier: Modifier = 
                                 MaterialTheme.colorScheme.onErrorContainer
                         )
                         Text(
-                            text = if (vehicle.isAvailable) "Disponible" else "No disponible",
+                            text = stringResource(
+                                if (vehicle.isAvailable) Res.string.available else Res.string.not_available
+                            ),
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.Medium,
                             color = if (vehicle.isAvailable)
