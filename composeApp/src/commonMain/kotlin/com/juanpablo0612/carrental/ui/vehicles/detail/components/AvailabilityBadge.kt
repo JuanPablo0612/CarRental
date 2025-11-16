@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import carrental.composeapp.generated.resources.Res
 import carrental.composeapp.generated.resources.available
@@ -28,21 +29,21 @@ fun AvailabilityBadge(
 ) {
     Row(
         modifier = modifier
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(24.dp))
             .background(
                 if (isAvailable)
                     MaterialTheme.colorScheme.primaryContainer
                 else
                     MaterialTheme.colorScheme.errorContainer
             )
-            .padding(horizontal = 12.dp, vertical = 6.dp),
+            .padding(horizontal = 16.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Icon(
             imageVector = Icons.Default.CheckCircle,
             contentDescription = null,
-            modifier = Modifier.size(16.dp),
+            modifier = Modifier.size(20.dp),
             tint = if (isAvailable)
                 MaterialTheme.colorScheme.onPrimaryContainer
             else
@@ -51,6 +52,7 @@ fun AvailabilityBadge(
         Text(
             text = stringResource(if (isAvailable) Res.string.available else Res.string.not_available),
             style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.SemiBold,
             color = if (isAvailable)
                 MaterialTheme.colorScheme.onPrimaryContainer
             else

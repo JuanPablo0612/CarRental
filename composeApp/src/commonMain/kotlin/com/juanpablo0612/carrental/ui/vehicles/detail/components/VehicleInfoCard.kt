@@ -37,35 +37,38 @@ fun VehicleInfoCard(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 1.dp
         )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            modifier = Modifier.padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
                 text = stringResource(Res.string.vehicle_information),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
             )
 
-            Spacer(modifier = Modifier.height(4.dp))
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                InfoRow(
+                    icon = Icons.Default.Info,
+                    label = stringResource(Res.string.type),
+                    value = vehicle.type
+                )
 
-            InfoRow(
-                icon = Icons.Default.Info,
-                label = stringResource(Res.string.type),
-                value = vehicle.type
-            )
-
-            InfoRow(
-                icon = Icons.Default.DateRange,
-                label = stringResource(Res.string.year),
-                value = vehicle.year.toString()
-            )
+                InfoRow(
+                    icon = Icons.Default.DateRange,
+                    label = stringResource(Res.string.year),
+                    value = vehicle.year.toString()
+                )
+            }
         }
     }
 }
@@ -79,26 +82,26 @@ private fun InfoRow(
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             imageVector = icon,
             contentDescription = null,
-            modifier = Modifier.size(20.dp),
+            modifier = Modifier.size(24.dp),
             tint = MaterialTheme.colorScheme.primary
         )
         Text(
             text = label,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.weight(1f)
         )
         Text(
             text = value,
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onSurface
         )
     }
 }
