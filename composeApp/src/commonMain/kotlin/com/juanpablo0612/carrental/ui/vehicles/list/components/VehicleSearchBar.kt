@@ -3,6 +3,8 @@ package com.juanpablo0612.carrental.ui.vehicles.list.components
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
@@ -21,13 +23,12 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun VehicleSearchBar(
-    searchQuery: String,
-    onSearchQueryChange: (String) -> Unit,
+    searchFieldState: TextFieldState,
+    onKeyboardAction: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     OutlinedTextField(
-        value = searchQuery,
-        onValueChange = onSearchQueryChange,
+        state = searchFieldState,
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
@@ -42,8 +43,12 @@ fun VehicleSearchBar(
             )
         },
         trailingIcon = {
-            if (searchQuery.isNotEmpty()) {
-                IconButton(onClick = { onSearchQueryChange("") }) {
+            if (searchFieldState.text.toString().isNotEmpty()) {
+                IconButton(onClick = {
+                    searchFieldState.edit {
+                        replace(0, searchFieldState.text.length, "")
+                    }
+                }) {
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = null,
@@ -52,12 +57,15 @@ fun VehicleSearchBar(
                 }
             }
         },
+        onKeyboardAction = { performDefaultAction ->
+            onKeyboardAction()
+            performDefaultAction()
+        },
         shape = RoundedCornerShape(28.dp),
         colors = TextFieldDefaults.colors(
             focusedIndicatorColor = MaterialTheme.colorScheme.primary,
             unfocusedIndicatorColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
         ),
-        singleLine = true
+        lineLimits = TextFieldLineLimits.SingleLine
     )
 }
-

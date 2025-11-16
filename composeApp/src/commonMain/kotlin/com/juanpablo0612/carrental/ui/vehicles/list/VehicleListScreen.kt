@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -17,12 +17,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import carrental.composeapp.generated.resources.Res
 import carrental.composeapp.generated.resources.add_vehicle
 import carrental.composeapp.generated.resources.vehicles
+import com.juanpablo0612.carrental.ui.components.CenteredCircularProgress
 import com.juanpablo0612.carrental.ui.theme.AppTheme
 import com.juanpablo0612.carrental.ui.vehicles.list.components.EmptyVehiclesState
 import com.juanpablo0612.carrental.ui.vehicles.list.components.ErrorVehiclesState
@@ -45,9 +45,10 @@ fun VehicleListScreen(
 
     VehicleListScreenContent(
         uiState = uiState,
+        searchFieldState = viewModel.searchFieldState,
+        onSearchQueryChange = viewModel::onSearchQueryChange,
         onVehicleClick = onNavigateToVehicleDetail,
         onAddVehicle = onNavigateToAddVehicle,
-        onSearchQueryChange = viewModel::onSearchQueryChange,
         onFilterChange = viewModel::onFilterChange,
         onRetry = viewModel::retry
     )
@@ -57,9 +58,10 @@ fun VehicleListScreen(
 @Composable
 private fun VehicleListScreenContent(
     uiState: VehicleListUiState,
+    searchFieldState: TextFieldState,
+    onSearchQueryChange: () -> Unit,
     onVehicleClick: (String) -> Unit,
     onAddVehicle: () -> Unit,
-    onSearchQueryChange: (String) -> Unit,
     onFilterChange: (VehicleFilter) -> Unit,
     onRetry: () -> Unit,
 ) {
@@ -100,8 +102,8 @@ private fun VehicleListScreenContent(
         ) {
             if (!uiState.isLoading && uiState.error == null) {
                 VehicleSearchBar(
-                    searchQuery = uiState.searchQuery,
-                    onSearchQueryChange = onSearchQueryChange
+                    searchFieldState = searchFieldState,
+                    onKeyboardAction = onSearchQueryChange,
                 )
 
                 VehicleFilterChips(
@@ -120,7 +122,7 @@ private fun VehicleListScreenContent(
             Box(modifier = Modifier.fillMaxSize()) {
                 when {
                     uiState.isLoading -> {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                        CenteredCircularProgress()
                     }
 
                     uiState.error != null -> {
@@ -130,11 +132,11 @@ private fun VehicleListScreenContent(
                         )
                     }
 
-                    uiState.vehicles.isEmpty() && uiState.searchQuery.isEmpty() -> {
+                    uiState.vehicles.isEmpty() && searchFieldState.text.isEmpty() -> {
                         EmptyVehiclesState(onAddVehicle = onAddVehicle)
                     }
 
-                    uiState.vehicles.isEmpty() && uiState.searchQuery.isNotEmpty() -> {
+                    uiState.vehicles.isEmpty() && searchFieldState.text.isNotEmpty() -> {
                         EmptyVehiclesState(
                             onAddVehicle = onAddVehicle,
                             modifier = Modifier.fillMaxSize()
@@ -163,12 +165,12 @@ fun VehicleListScreenContentPreview() {
                 isLoading = false,
                 vehicles = emptyList(),
                 error = null,
-                searchQuery = "",
                 selectedFilter = VehicleFilter.ALL
             ),
+            searchFieldState = TextFieldState(),
+            onSearchQueryChange = {},
             onVehicleClick = {},
             onAddVehicle = {},
-            onSearchQueryChange = {},
             onFilterChange = {},
             onRetry = {}
         )

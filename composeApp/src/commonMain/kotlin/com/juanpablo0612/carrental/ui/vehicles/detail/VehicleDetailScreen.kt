@@ -8,21 +8,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import carrental.composeapp.generated.resources.Res
 import carrental.composeapp.generated.resources.not_available
 import carrental.composeapp.generated.resources.rent_now
 import com.juanpablo0612.carrental.domain.model.Vehicle
+import com.juanpablo0612.carrental.ui.components.CenteredCircularProgress
+import com.juanpablo0612.carrental.ui.components.PrimaryActionButton
 import com.juanpablo0612.carrental.ui.theme.AppTheme
 import com.juanpablo0612.carrental.ui.vehicles.detail.components.AvailabilityBadge
 import com.juanpablo0612.carrental.ui.vehicles.detail.components.PriceSection
@@ -64,7 +60,7 @@ private fun VehicleDetailScreenContent(
         ) {
             when {
                 uiState.isLoading -> {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    CenteredCircularProgress()
                 }
 
                 uiState.vehicle != null -> {
@@ -98,19 +94,16 @@ private fun VehicleDetailScreenContent(
 
                             Spacer(modifier = Modifier.height(24.dp))
 
-                            Button(
-                                onClick = onRentClick,
+                            PrimaryActionButton(
+                                text = stringResource(if (uiState.vehicle.isAvailable) Res.string.rent_now else Res.string.not_available),
+                                isLoading = false,
                                 enabled = uiState.vehicle.isAvailable,
+                                onClick = onRentClick,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(56.dp),
-                                shape = RoundedCornerShape(12.dp)
-                            ) {
-                                Text(
-                                    text = stringResource(if (uiState.vehicle.isAvailable) Res.string.rent_now else Res.string.not_available),
-                                    style = MaterialTheme.typography.titleMedium
-                                )
-                            }
+                                heightDp = 56
+                            )
 
                             Spacer(modifier = Modifier.height(16.dp))
                         }

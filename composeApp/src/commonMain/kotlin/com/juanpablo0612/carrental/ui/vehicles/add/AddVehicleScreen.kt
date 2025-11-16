@@ -14,13 +14,11 @@ import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -50,6 +48,8 @@ import carrental.composeapp.generated.resources.vehicle_type
 import carrental.composeapp.generated.resources.vehicle_year
 import carrental.composeapp.generated.resources.year_placeholder
 import com.juanpablo0612.carrental.ui.theme.AppTheme
+import com.juanpablo0612.carrental.ui.components.LabeledOutlinedTextField
+import com.juanpablo0612.carrental.ui.components.PrimaryActionButton
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -138,7 +138,7 @@ private fun AddVehicleScreenContent(
                     .imePadding(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                OutlinedTextField(
+                LabeledOutlinedTextField(
                     state = makeState,
                     label = { Text(stringResource(Res.string.vehicle_make)) },
                     placeholder = { Text(stringResource(Res.string.make_placeholder)) },
@@ -152,7 +152,7 @@ private fun AddVehicleScreenContent(
                     }
                 )
 
-                OutlinedTextField(
+                LabeledOutlinedTextField(
                     state = modelState,
                     label = { Text(stringResource(Res.string.vehicle_model)) },
                     placeholder = { Text(stringResource(Res.string.model_placeholder)) },
@@ -166,7 +166,7 @@ private fun AddVehicleScreenContent(
                     }
                 )
 
-                OutlinedTextField(
+                LabeledOutlinedTextField(
                     state = yearState,
                     label = { Text(stringResource(Res.string.vehicle_year)) },
                     placeholder = { Text(stringResource(Res.string.year_placeholder)) },
@@ -181,7 +181,7 @@ private fun AddVehicleScreenContent(
                     }
                 )
 
-                OutlinedTextField(
+                LabeledOutlinedTextField(
                     state = typeState,
                     label = { Text(stringResource(Res.string.vehicle_type)) },
                     placeholder = { Text(stringResource(Res.string.type_placeholder)) },
@@ -195,7 +195,7 @@ private fun AddVehicleScreenContent(
                     }
                 )
 
-                OutlinedTextField(
+                LabeledOutlinedTextField(
                     state = pricePerDayState,
                     label = { Text(stringResource(Res.string.vehicle_price_per_day)) },
                     placeholder = { Text(stringResource(Res.string.price_placeholder)) },
@@ -210,7 +210,7 @@ private fun AddVehicleScreenContent(
                     }
                 )
 
-                OutlinedTextField(
+                LabeledOutlinedTextField(
                     state = imageUrlState,
                     label = { Text(stringResource(Res.string.vehicle_image_url)) },
                     placeholder = { Text(stringResource(Res.string.image_url_placeholder)) },
@@ -224,25 +224,16 @@ private fun AddVehicleScreenContent(
                     }
                 )
 
-                Button(
+                PrimaryActionButton(
+                    text = stringResource(Res.string.save),
+                    isLoading = uiState.isAdding,
+                    enabled = !uiState.isAdding,
                     onClick = onSaveClick,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
-                    enabled = !uiState.isAdding,
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                    if (uiState.isAdding) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.padding(8.dp)
-                        )
-                    } else {
-                        Text(
-                            text = stringResource(Res.string.save),
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                }
+                    heightDp = 56
+                )
             }
         }
     }

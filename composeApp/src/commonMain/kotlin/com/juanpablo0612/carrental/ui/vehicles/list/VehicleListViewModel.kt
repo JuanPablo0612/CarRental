@@ -1,5 +1,6 @@
 package com.juanpablo0612.carrental.ui.vehicles.list
 
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -16,12 +17,13 @@ class VehicleListViewModel(private val vehiclesRepository: VehiclesRepository) :
 
     private var allVehicles: List<Vehicle> = emptyList()
 
+    val searchFieldState = TextFieldState()
+
     init {
         loadVehicles()
     }
 
-    fun onSearchQueryChange(query: String) {
-        uiState = uiState.copy(searchQuery = query)
+    fun onSearchQueryChange() {
         filterVehicles()
     }
 
@@ -35,10 +37,9 @@ class VehicleListViewModel(private val vehiclesRepository: VehiclesRepository) :
     }
 
     private fun filterVehicles() {
-        val query = uiState.searchQuery.trim().lowercase()
+        val query = searchFieldState.text.toString().trim().lowercase()
         var filteredVehicles = allVehicles
 
-        // Aplicar filtro de búsqueda
         if (query.isNotEmpty()) {
             filteredVehicles = filteredVehicles.filter { vehicle ->
                 vehicle.make.lowercase().contains(query) ||
@@ -48,7 +49,6 @@ class VehicleListViewModel(private val vehiclesRepository: VehiclesRepository) :
             }
         }
 
-        // Aplicar filtro de disponibilidad
         filteredVehicles = when (uiState.selectedFilter) {
             VehicleFilter.ALL -> filteredVehicles
             VehicleFilter.AVAILABLE -> filteredVehicles.filter { it.isAvailable }
@@ -83,7 +83,6 @@ data class VehicleListUiState(
     val isLoading: Boolean = false,
     val error: VehicleListError? = null,
     val vehicles: List<Vehicle> = emptyList(),
-    val searchQuery: String = "",
     val selectedFilter: VehicleFilter = VehicleFilter.ALL,
 )
 
