@@ -1,6 +1,5 @@
 package com.juanpablo0612.carrental.data.di
 
-import com.juanpablo0612.carrental.data.vehicles.FakeVehiclesRepository
 import com.juanpablo0612.carrental.data.vehicles.VehiclesRepository
 import com.juanpablo0612.carrental.data.vehicles.VehiclesRepositoryImpl
 import com.juanpablo0612.carrental.data.vehicles.remote.VehiclesRemoteDataSource
