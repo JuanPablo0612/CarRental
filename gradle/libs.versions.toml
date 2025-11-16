@@ -17,6 +17,8 @@ koin = "4.1.1"
 ktor = "3.3.2"
 navigation = "2.9.1"
 coil = "3.3.0"
+firebaseKotlinSdk = "2.4.0"
+googleServices = "4.4.4"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -40,6 +42,10 @@ coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" 
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+firebase-analytics = { module = "dev.gitlive:firebase-analytics", version.ref = "firebaseKotlinSdk" }
+firebase-auth = { module = "dev.gitlive:firebase-auth", version.ref = "firebaseKotlinSdk" }
+firebase-firestore = { module = "dev.gitlive:firebase-firestore", version.ref = "firebaseKotlinSdk" }
+firebase-storage = { module = "dev.gitlive:firebase-storage", version.ref = "firebaseKotlinSdk" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -48,3 +54,4 @@ composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMul
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+googleServices = { id = "com.google.gms.google-services", version.ref = "googleServices" }
