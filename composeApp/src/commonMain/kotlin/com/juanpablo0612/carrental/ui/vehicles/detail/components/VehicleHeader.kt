@@ -20,15 +20,14 @@ fun VehicleHeader(
     Column(modifier = modifier) {
         Text(
             text = "$make $model",
-            style = MaterialTheme.typography.headlineLarge,
+            style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurface
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = year.toString(),
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Medium,
+            style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
