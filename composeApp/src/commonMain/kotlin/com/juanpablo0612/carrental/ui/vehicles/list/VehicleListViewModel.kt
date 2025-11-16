@@ -62,18 +62,18 @@ class VehicleListViewModel(private val vehiclesRepository: VehiclesRepository) :
         viewModelScope.launch {
             uiState = uiState.copy(isLoading = true, error = null)
 
-            val vehiclesResult = vehiclesRepository.getAllVehicles()
-
-            if (vehiclesResult.isSuccess) {
-                val vehicles = vehiclesResult.getOrNull().orEmpty()
-                allVehicles = vehicles
-                uiState = uiState.copy(isLoading = false)
-                filterVehicles()
-            } else {
-                uiState = uiState.copy(
-                    isLoading = false,
-                    error = VehicleListError.LoadError(vehiclesResult.exceptionOrNull()?.message)
-                )
+            vehiclesRepository.getAllVehicles().collect { vehiclesResult ->
+                if (vehiclesResult.isSuccess) {
+                    val vehicles = vehiclesResult.getOrNull().orEmpty()
+                    allVehicles = vehicles
+                    uiState = uiState.copy(isLoading = false)
+                    filterVehicles()
+                } else {
+                    uiState = uiState.copy(
+                        isLoading = false,
+                        error = VehicleListError.LoadError(vehiclesResult.exceptionOrNull()?.message)
+                    )
+                }
             }
         }
     }

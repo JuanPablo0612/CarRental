@@ -28,16 +28,16 @@ class VehicleDetailViewModel(
         viewModelScope.launch {
             uiState = uiState.copy(isLoading = true, error = null)
 
-            val vehicleResult = vehiclesRepository.getVehicleById(id)
-
-            if (vehicleResult.isSuccess) {
-                val vehicle = vehicleResult.getOrNull()
-                uiState = uiState.copy(isLoading = false, vehicle = vehicle)
-            } else {
-                uiState = uiState.copy(
-                    isLoading = false,
-                    error = VehicleDetailError.LoadError(vehicleResult.exceptionOrNull()?.message)
-                )
+            vehiclesRepository.getVehicleById(id).collect { vehicleResult ->
+                if (vehicleResult.isSuccess) {
+                    val vehicle = vehicleResult.getOrNull()
+                    uiState = uiState.copy(isLoading = false, vehicle = vehicle)
+                } else {
+                    uiState = uiState.copy(
+                        isLoading = false,
+                        error = VehicleDetailError.LoadError(vehicleResult.exceptionOrNull()?.message)
+                    )
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.juanpablo0612.carrental.data.vehicles.model
 
+import com.juanpablo0612.carrental.domain.model.Vehicle
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -21,4 +22,15 @@ data class VehicleModel(
     val imageUrl: String,
     @SerialName("is_available")
     val isAvailable: Boolean,
+)
+
+fun VehicleModel.toDomain() = Vehicle(
+    id = id,
+    make = make,
+    model = model,
+    year = year,
+    type = type,
+    pricePerDay = pricePerDay,
+    imageUrl = imageUrl,
+    isAvailable = isAvailable
 )

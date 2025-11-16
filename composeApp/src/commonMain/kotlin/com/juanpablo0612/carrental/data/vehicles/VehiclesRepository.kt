@@ -1,11 +1,46 @@
 package com.juanpablo0612.carrental.data.vehicles
 
+import com.juanpablo0612.carrental.data.vehicles.model.toDomain
+import com.juanpablo0612.carrental.data.vehicles.remote.VehiclesRemoteDataSource
 import com.juanpablo0612.carrental.domain.model.Vehicle
+import com.juanpablo0612.carrental.domain.model.toModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 interface VehiclesRepository {
-    suspend fun getAllVehicles(): Result<List<Vehicle>>
-    suspend fun getVehicleById(id: String): Result<Vehicle?>
+    fun getAllVehicles(): Flow<Result<List<Vehicle>>>
+    fun getVehicleById(id: String): Flow<Result<Vehicle?>>
     suspend fun addVehicle(vehicle: Vehicle): Result<Unit>
+}
+
+class VehiclesRepositoryImpl(private val remoteDataSource: VehiclesRemoteDataSource) :
+    VehiclesRepository {
+    override fun getAllVehicles(): Flow<Result<List<Vehicle>>> {
+        return remoteDataSource
+            .getAllVehicles().map {
+                Result.success(it.map { model -> model.toDomain() })
+            }
+            .catch { emit(Result.failure(it)) }
+    }
+
+    override fun getVehicleById(id: String): Flow<Result<Vehicle?>> {
+        return remoteDataSource
+            .getVehicleById(id).map {
+                Result.success(it.toDomain())
+            }
+            .catch { emit(Result.failure(it)) }
+    }
+
+    override suspend fun addVehicle(vehicle: Vehicle): Result<Unit> {
+        return try {
+            remoteDataSource.addVehicle(vehicle.toModel())
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }
 
 class FakeVehiclesRepository : VehiclesRepository {
@@ -17,38 +52,42 @@ class FakeVehiclesRepository : VehiclesRepository {
             year = 2020,
             type = "Sedan",
             pricePerDay = 45.0,
-            imageUrl = "https://media.ed.edmunds-media.com/toyota/camry/2020/oem/2020_toyota_camry_sedan_se_fq_oem_2_1600.jpg",
+            imageUrl = "https://img.asmedia.epimg.net/resizer/v2/RDOPBNRDS5KLJGZ74ENN4RYYLY.jpg?auth=249f81b9e335f97730b76b1edbe9ac8878283a43f1c96957b912cdc91fc67d2d&width=1472&height=1104&smart=true",
             isAvailable = true
         ),
         Vehicle(
             id = "2",
-            make = "Ford",
-            model = "Explorer",
+            make = "Honda",
+            model = "Civic",
             year = 2019,
-            type = "SUV",
-            pricePerDay = 60.0,
-            imageUrl = "https://images.hgmsites.net/lrg/2019-ford-explorer-xlt-4wd-angular-front-exterior-view_100675940_l.jpg",
+            type = "Sedan",
+            pricePerDay = 40.0,
+            imageUrl = "https://di-uploads-pod16.dealerinspire.com/pattypeckhonda/uploads/2018/10/2019-Civic-sedan-lx-trim-600x335.png",
             isAvailable = false
         ),
         Vehicle(
             id = "3",
-            make = "Honda",
-            model = "Civic",
+            make = "Ford",
+            model = "Explorer",
             year = 2021,
-            type = "Sedan",
-            pricePerDay = 50.0,
-            imageUrl = "https://autotest.com.ar/wp-content/uploads/2020/10/honda-civic-2021.jpg",
+            type = "SUV",
+            pricePerDay = 60.0,
+            imageUrl = "https://di-uploads-pod39.dealerinspire.com/kingsford/uploads/2021/02/2021-Ford-Explorer-Overview-Left.jpg",
             isAvailable = true
         )
     )
 
-    override suspend fun getAllVehicles(): Result<List<Vehicle>> {
-        return Result.success(vehicles)
+    override fun getAllVehicles(): Flow<Result<List<Vehicle>>> {
+        return flow {
+            emit(Result.success(vehicles.toList()))
+        }
     }
 
-    override suspend fun getVehicleById(id: String): Result<Vehicle?> {
-        val vehicle = vehicles.find { it.id == id }
-        return Result.success(vehicle)
+    override fun getVehicleById(id: String): Flow<Result<Vehicle?>> {
+        return flow {
+            val vehicle = vehicles.find { it.id == id }
+            emit(Result.success(vehicle))
+        }
     }
 
     override suspend fun addVehicle(vehicle: Vehicle): Result<Unit> {
