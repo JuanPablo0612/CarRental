@@ -8,5 +8,5 @@ data class Vehicle(
     val type: String,
     val pricePerDay: Double,
     val imageUrl: String,
-    val isAvailable: Boolean,
+    val isAvailable: Boolean = true,
 )

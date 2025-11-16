@@ -5,10 +5,11 @@ import com.juanpablo0612.carrental.domain.model.Vehicle
 interface VehiclesRepository {
     suspend fun getAllVehicles(): Result<List<Vehicle>>
     suspend fun getVehicleById(id: String): Result<Vehicle?>
+    suspend fun addVehicle(vehicle: Vehicle): Result<Unit>
 }
 
 class FakeVehiclesRepository : VehiclesRepository {
-    private val vehicles = listOf(
+    private val vehicles = mutableListOf(
         Vehicle(
             id = "1",
             make = "Toyota",
@@ -48,5 +49,10 @@ class FakeVehiclesRepository : VehiclesRepository {
     override suspend fun getVehicleById(id: String): Result<Vehicle?> {
         val vehicle = vehicles.find { it.id == id }
         return Result.success(vehicle)
+    }
+
+    override suspend fun addVehicle(vehicle: Vehicle): Result<Unit> {
+        vehicles.add(vehicle)
+        return Result.success(Unit)
     }
 }
