@@ -38,28 +38,20 @@ fun VehicleListItem(vehicle: Vehicle, onClick: () -> Unit, modifier: Modifier = 
     Card(
         modifier = modifier,
         onClick = onClick,
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 2.dp,
-            pressedElevation = 8.dp,
-            hoveredElevation = 4.dp
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-        shape = RoundedCornerShape(16.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             AsyncImage(
                 model = vehicle.imageUrl,
                 contentDescription = vehicle.model,
                 modifier = Modifier
-                    .size(140.dp, 100.dp)
-                    .clip(RoundedCornerShape(12.dp))
+                    .size(120.dp)
+                    .clip(RoundedCornerShape(8.dp))
                     .background(MaterialTheme.colorScheme.surfaceVariant),
                 contentScale = ContentScale.Crop
             )
@@ -68,9 +60,9 @@ fun VehicleListItem(vehicle: Vehicle, onClick: () -> Unit, modifier: Modifier = 
                 modifier = Modifier
                     .weight(1f)
                     .align(Alignment.CenterVertically),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     Text(
                         text = vehicle.model,
                         style = MaterialTheme.typography.titleLarge,
@@ -79,13 +71,13 @@ fun VehicleListItem(vehicle: Vehicle, onClick: () -> Unit, modifier: Modifier = 
                     )
                     Text(
                         text = vehicle.make,
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
 
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
@@ -113,7 +105,7 @@ fun VehicleListItem(vehicle: Vehicle, onClick: () -> Unit, modifier: Modifier = 
                     Row(verticalAlignment = Alignment.Bottom) {
                         Text(
                             text = "$${vehicle.pricePerDay}",
-                            style = MaterialTheme.typography.headlineSmall,
+                            style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -121,22 +113,22 @@ fun VehicleListItem(vehicle: Vehicle, onClick: () -> Unit, modifier: Modifier = 
                             text = stringResource(Res.string.per_day),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)
+                            modifier = Modifier.padding(start = 4.dp, bottom = 2.dp)
                         )
                     }
 
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
                         modifier = Modifier
-                            .clip(RoundedCornerShape(20.dp))
+                            .clip(RoundedCornerShape(12.dp))
                             .background(
                                 if (vehicle.isAvailable)
                                     MaterialTheme.colorScheme.primaryContainer
                                 else
                                     MaterialTheme.colorScheme.errorContainer
                             )
-                            .padding(horizontal = 12.dp, vertical = 6.dp)
+                            .padding(horizontal = 8.dp, vertical = 4.dp)
                     ) {
                         Icon(
                             imageVector = if (vehicle.isAvailable)
@@ -144,7 +136,7 @@ fun VehicleListItem(vehicle: Vehicle, onClick: () -> Unit, modifier: Modifier = 
                             else
                                 Icons.Default.Warning,
                             contentDescription = null,
-                            modifier = Modifier.size(18.dp),
+                            modifier = Modifier.size(16.dp),
                             tint = if (vehicle.isAvailable)
                                 MaterialTheme.colorScheme.onPrimaryContainer
                             else
@@ -155,7 +147,7 @@ fun VehicleListItem(vehicle: Vehicle, onClick: () -> Unit, modifier: Modifier = 
                                 if (vehicle.isAvailable) Res.string.available else Res.string.not_available
                             ),
                             style = MaterialTheme.typography.labelMedium,
-                            fontWeight = FontWeight.SemiBold,
+                            fontWeight = FontWeight.Medium,
                             color = if (vehicle.isAvailable)
                                 MaterialTheme.colorScheme.onPrimaryContainer
                             else
